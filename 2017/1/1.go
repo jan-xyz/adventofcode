@@ -14,7 +14,7 @@ func main()  {
 	if err != nil {
 		fmt.Print(err)
 	}
-	fmt.Print(sumThatShizzle(string(thingy)))
+	fmt.Println(sumThatShizzle(string(thingy)))
 
 }
 
@@ -22,9 +22,9 @@ func main()  {
 func sumThatShizzle(input string) int {
 	sum := 0
 	for position, character := range(input) {
-		next := 0
-		if position + 1 <= len(input) - 1 {
-			next = position + 1
+		next := position + 1
+		if next >= len(input) - 1 {
+			next = 0
 		}
 		if input[position] == input[next] {
 			sum += int(character - '0')
