@@ -18,16 +18,7 @@ func main() {
 	if err != nil {
 		fmt.Print(err)
 	}
-	var puzzleInput [][]int
-	puzzleInput_lines := strings.Split(strings.TrimSpace(string(thingy)), "\n")
-
-	for index, row := range puzzleInput_lines {
-		puzzleInput = append(puzzleInput, []int{})
-		for _, element := range strings.Split(row, "\t"){
-			num, _ := strconv.Atoi(element)
-			puzzleInput[index] = append(puzzleInput[index], num)
-		}
-	}
+	puzzleInput := parseThatShizzle(thingy)
 	fmt.Println(hashThatShizzle(puzzleInput))
 }
 
@@ -47,4 +38,18 @@ func hashThatShizzle(array [][]int) int {
 		sum += highest - lowest
 	}
 	return sum
+}
+
+func parseThatShizzle(byteMe []byte) [][]int {
+	var intArray [][]int
+	byteMeLines := strings.Split(strings.TrimSpace(string(byteMe)), "\n")
+
+	for index, row := range byteMeLines {
+		intArray = append(intArray, []int{})
+		for _, element := range strings.Split(row, "\t") {
+			num, _ := strconv.Atoi(element)
+			intArray[index] = append(intArray[index], num)
+		}
+	}
+	return intArray
 }
