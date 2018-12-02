@@ -12,7 +12,7 @@ func main() {
 
 	puzzleLines := strings.Split(strings.TrimSpace(puzzleInput), "\n")
 
-	puzzle1(puzzleLines)
+	puzzle2(puzzleLines)
 }
 
 func puzzle1(puzzleLines []string) {
@@ -44,5 +44,32 @@ func puzzle1(puzzleLines []string) {
 
 }
 
-func puzzle2(puzzleLines [][]byte) {
+func puzzle2(puzzleLines []string) {
+
+	var candidates [2]string
+	for index, line := range puzzleLines {
+		fmt.Printf("%s", line)
+		for _, newLine := range puzzleLines[index+1:] {
+			fmt.Printf(" ; %s", newLine)
+			diff := 0
+			for i, char := range line {
+				if char != rune(newLine[i]) {
+					diff = diff + 1
+				}
+			}
+			if diff < 2 {
+				candidates[0] = line
+				candidates[1] = newLine
+			}
+		}
+		fmt.Println()
+	}
+	fmt.Println(candidates)
+	output := ""
+	for index, char := range candidates[0] {
+		if char == rune(candidates[1][index]) {
+			output = output + string(char)
+		}
+	}
+	fmt.Println(output)
 }
