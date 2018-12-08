@@ -14,10 +14,11 @@ var testClaims = []string{
 	"#3 @ 5,5: 2x2",
 }
 
-var claimStringMatcher = regexp.MustCompile("#\\d+ @ (\\d+),(\\d+): (\\d+)x(\\d+)")
+var claimStringMatcher = regexp.MustCompile("#(\\d+) @ (\\d+),(\\d+): (\\d+)x(\\d+)")
 
 //Claim is a representation of an elves claim on the fabric
 type Claim struct {
+	id     int
 	x      int
 	y      int
 	width  int
@@ -26,10 +27,11 @@ type Claim struct {
 
 func (c *Claim) parseFromString(claimString string) {
 	matches := claimStringMatcher.FindStringSubmatch(claimString)
-	c.x, _ = strconv.Atoi(matches[1])
-	c.y, _ = strconv.Atoi(matches[2])
-	c.width, _ = strconv.Atoi(matches[3])
-	c.height, _ = strconv.Atoi(matches[4])
+	c.id, _ = strconv.Atoi(matches[1])
+	c.x, _ = strconv.Atoi(matches[2])
+	c.y, _ = strconv.Atoi(matches[3])
+	c.width, _ = strconv.Atoi(matches[4])
+	c.height, _ = strconv.Atoi(matches[5])
 }
 
 func main() {
@@ -50,7 +52,9 @@ func one(claims []string) {
 
 	overlap := 0
 
-	fabric := make(map[string]int)
+	fabric := make(map[string][]int)
+	validClaims := make(map[int]int)
+	invalidClaims := make(map[int]int)
 
 	for _, claimString := range claims {
 		claim := new(Claim)
@@ -59,15 +63,25 @@ func one(claims []string) {
 			for currentWidth := 0; currentWidth < claim.width; currentWidth++ {
 				row := claim.y + currentHeight
 				column := claim.x + currentWidth
-				index := fabric[fmt.Sprintf("%d:%d", row, column)]
-				if index == 1 {
-					overlap = overlap + 1
+				count := fabric[fmt.Sprintf("%d:%d", row, column)]
+				fabric[fmt.Sprintf("%d:%d", row, column)] = append(count, claim.id)
+				count = fabric[fmt.Sprintf("%d:%d", row, column)]
+				if len(count) > 1 {
+					if len(count) == 2 {
+						overlap = overlap + 1
+					}
+					for _, id := range count {
+						delete(validClaims, id)
+						invalidClaims[id] = 1
+					}
 				}
-				fabric[fmt.Sprintf("%d:%d", row, column)] = index + 1
 			}
 		}
-
+		if invalidClaims[claim.id] != 1 {
+			validClaims[claim.id] = 0
+		}
 	}
-	fmt.Printf("Overlap: %d", overlap)
+	fmt.Println("Overlap: ", overlap)
 
+	fmt.Println("Valid: ", validClaims)
 }
