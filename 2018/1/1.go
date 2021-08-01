@@ -12,7 +12,7 @@ func main() {
 }
 
 func puzzle2() {
-	puzzleInput, _ := ioutil.ReadFile("1/1.puzzle_input2.txt")
+	puzzleInput, _ := ioutil.ReadFile("1/input.txt")
 
 	puzzleLines := bytes.Split(bytes.TrimSpace(puzzleInput), []byte("\n"))
 
@@ -24,8 +24,8 @@ func puzzle2() {
 		element := puzzleLines[index]
 		summand, _ := strconv.Atoi(string(bytes.TrimSpace(element)))
 		sum = sum + summand
-		//fmt.Printf("summand: %d ; new sum: %d\n", summand, sum)
-		id, _ := listOfFrequencies[sum]
+		// fmt.Printf("summand: %d ; new sum: %d\n", summand, sum)
+		id := listOfFrequencies[sum]
 		if id == -1 {
 			fmt.Println(sum)
 			break

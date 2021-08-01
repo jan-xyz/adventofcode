@@ -2,7 +2,7 @@
 
 
 if __name__ == '__main__':
-    with open('./puzzle_input') as file:
+    with open('./input.txt') as file:
         puzzle_input = [int(line) for line in file.read().splitlines()]
 
     inside = True
@@ -10,7 +10,8 @@ if __name__ == '__main__':
     steps = 0
     jump = 0
     while inside:
-        print("at {0} of {1} with next jump being {2}".format(index, len(puzzle_input), jump))
+        print("at {0} of {1} with next jump being {2}".format(
+            index, len(puzzle_input), jump))
         if index >= len(puzzle_input) or index < 0:
             inside = False
         else:
@@ -20,4 +21,3 @@ if __name__ == '__main__':
             steps += 1
 
     print("steps : {0}".format(steps))
-

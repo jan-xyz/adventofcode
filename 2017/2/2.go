@@ -1,10 +1,10 @@
 package main
 
 import (
-	"io/ioutil"
 	"fmt"
-	"strings"
+	"io/ioutil"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 	fmt.Println(hashThatShizzle(input1))
 
 	// riddle data
-	thingy, err := ioutil.ReadFile("puzzle_input")
+	thingy, err := ioutil.ReadFile("input.txt")
 	if err != nil {
 		fmt.Print(err)
 	}

@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	puzzleInputBytes, _ := ioutil.ReadFile("2/1.input.txt")
+	puzzleInputBytes, _ := ioutil.ReadFile("2/input.txt")
 	puzzleInput := string(puzzleInputBytes)
 
 	puzzleLines := strings.Split(strings.TrimSpace(puzzleInput), "\n")
@@ -28,10 +28,11 @@ func puzzle1(puzzleLines []string) {
 		addTwo := 0
 		addThree := 0
 		for letter, count := range letterCollection {
-			if count == 2 {
+			switch count {
+			case 2:
 				fmt.Printf(" has 2 %c", letter)
 				addTwo = 1
-			} else if count == 3 {
+			case 3:
 				fmt.Printf(" has 3 %c", letter)
 				addThree = 1
 			}
@@ -41,11 +42,9 @@ func puzzle1(puzzleLines []string) {
 		fmt.Println()
 	}
 	fmt.Printf("%d * %d = %d\n", twoLetters, threeLetters, twoLetters*threeLetters)
-
 }
 
 func puzzle2(puzzleLines []string) {
-
 	var candidates [2]string
 	for index, line := range puzzleLines {
 		fmt.Printf("%s", line)

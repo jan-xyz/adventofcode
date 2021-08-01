@@ -13,7 +13,7 @@ def is_valid_no_palindrome(passphrase):
 
 if __name__ == '__main__':
 
-    with open('./puzzle_input') as file:
+    with open('./input.txt') as file:
         lines = file.readlines()
 
     valid_passwords = 0

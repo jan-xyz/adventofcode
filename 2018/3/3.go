@@ -14,9 +14,9 @@ var testClaims = []string{
 	"#3 @ 5,5: 2x2",
 }
 
-var claimStringMatcher = regexp.MustCompile("#(\\d+) @ (\\d+),(\\d+): (\\d+)x(\\d+)")
+var claimStringMatcher = regexp.MustCompile(`#(\d+) @ (\d+),(\d+): (\d+)x(\d+)`)
 
-//Claim is a representation of an elves claim on the fabric
+// Claim is a representation of an elves claim on the fabric
 type Claim struct {
 	id     int
 	x      int
@@ -35,7 +35,7 @@ func (c *Claim) parseFromString(claimString string) {
 }
 
 func main() {
-	file, err := os.Open("2018/3/1.input.txt")
+	file, err := os.Open("2018/3/input.txt")
 	if err != nil {
 		panic(err)
 	}
@@ -49,7 +49,6 @@ func main() {
 }
 
 func one(claims []string) {
-
 	overlap := 0
 
 	fabric := make(map[string][]int)

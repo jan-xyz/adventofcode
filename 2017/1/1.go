@@ -5,12 +5,12 @@ import (
 	"io/ioutil"
 )
 
-func main()  {
+func main() {
 	for _, e := range []string{"1122", "1111", "1234", "91212129"} {
 		fmt.Println(sumThatShizzle(e, 1))
 	}
 
-	thingy, err := ioutil.ReadFile("puzzle_input")
+	thingy, err := ioutil.ReadFile("input.txt")
 	if err != nil {
 		fmt.Print(err)
 	}
@@ -20,15 +20,13 @@ func main()  {
 		fmt.Println(sumThatShizzle(e, len(e)/2))
 	}
 	fmt.Println(sumThatShizzle(string(thingy), len(string(thingy))/2))
-
 }
-
 
 func sumThatShizzle(input string, adder int) int {
 	sum := 0
 	for position, character := range input {
 		next := position + adder
-		if next > len(input) - 1 {
+		if next > len(input)-1 {
 			next = 0 + (next - len(input))
 		}
 		if input[position] == input[next] {
