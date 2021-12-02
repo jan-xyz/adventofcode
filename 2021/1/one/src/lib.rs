@@ -1,7 +1,10 @@
-fn increase_1(input: Vec<isize>) -> isize {
+fn increase_1(window_size: usize, input: Vec<isize>) -> isize {
+    let windows = input.windows(window_size);
     let mut output = 0;
-    input.into_iter().reduce(|prev, current| {
-        if current > prev {
+    windows.reduce(|prev, current| {
+        println!("prev: {:?}", prev);
+        println!("curr: {:?}", current);
+        if current.iter().sum::<isize>() > prev.iter().sum::<isize>() {
             output = output + 1;
         };
         current
@@ -14,10 +17,18 @@ mod testmain {
     use crate::*;
 
     #[test]
+    fn test_two() {
+        let input = vec![199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
+
+        let actual = increase_1(3, input);
+        assert_eq!(actual, 5);
+    }
+
+    #[test]
     fn test_one() {
         let input = vec![199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
 
-        let actual = increase_1(input);
+        let actual = increase_1(1, input);
         assert_eq!(actual, 7);
     }
 
@@ -167,7 +178,7 @@ mod testmain {
             9667, 9664, 9665, 9666, 9671, 9674, 9683, 9684, 9713, 9726, 9735, 9737, 9752, 9745,
         ];
 
-        let actual = increase_1(input);
-        assert_eq!(actual, 7);
+        let actual = increase_1(3, input);
+        assert_eq!(actual, 1702);
     }
 }
