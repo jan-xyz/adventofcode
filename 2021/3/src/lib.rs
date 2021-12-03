@@ -6,19 +6,7 @@ fn p1(input: Vec<&str>) -> (isize, isize) {
     let mut epsilon_rate_binary = String::from("");
 
     for i in 0..length {
-        let mut count_0 = 0;
-        let mut count_1 = 0;
-        for item in &input {
-            match item.chars().nth(i) {
-                Some('1') => count_1 = count_1 + 1,
-                Some('0') => count_0 = count_0 + 1,
-                _ => {
-                    println!("ERR")
-                }
-            }
-        }
-        println!("i:{}  1: {}   0: {}", i, count_1, count_0);
-        if count_1 > count_0 {
+        if has_equal_or_more_ones(&input, i) {
             gamma_rate_binary.push_str("1");
             epsilon_rate_binary.push_str("0");
         } else {
@@ -32,6 +20,71 @@ fn p1(input: Vec<&str>) -> (isize, isize) {
         isize::from_str_radix(&gamma_rate_binary, 2).unwrap(),
         isize::from_str_radix(&epsilon_rate_binary, 2).unwrap(),
     )
+}
+
+fn p2(input: Vec<&str>) -> (isize, isize) {
+    let mut oxygen_rating = reduce_o(input.clone(), 0);
+    let mut co2_rating = reduce_co2(input, 0);
+    (
+        isize::from_str_radix(&oxygen_rating, 2).unwrap(),
+        isize::from_str_radix(&co2_rating, 2).unwrap(),
+    )
+}
+
+fn has_equal_or_more_ones(input: &Vec<&str>, pos: usize) -> bool {
+    let mut count_0 = 0;
+    let mut count_1 = 0;
+    for item in input {
+        match item.chars().nth(pos) {
+            Some('1') => count_1 = count_1 + 1,
+            Some('0') => count_0 = count_0 + 1,
+            _ => {
+                println!("ERR")
+            }
+        }
+    }
+    println!("i:{}  1: {}   0: {}", pos, count_1, count_0);
+    count_1 >= count_0
+}
+
+fn remove_items(input: Vec<&str>, pos: usize, c: char) -> Vec<&str> {
+    input
+        .into_iter()
+        .filter(|item| item.chars().nth(pos) == Some(c))
+        .collect()
+}
+
+fn reduce_o(input: Vec<&str>, pos: usize) -> &str {
+    println!("i:{}  input: {:?}", pos, input);
+    match input.len() {
+        0 => {
+            panic!("too short!")
+        }
+        1 => return input[0],
+        _ => {
+            if has_equal_or_more_ones(&input, pos) {
+                reduce_o(remove_items(input, pos, '1'), pos + 1)
+            } else {
+                reduce_o(remove_items(input, pos, '0'), pos + 1)
+            }
+        }
+    }
+}
+
+fn reduce_co2(input: Vec<&str>, pos: usize) -> &str {
+    match input.len() {
+        0 => {
+            panic!("too short!")
+        }
+        1 => return input[0],
+        _ => {
+            if has_equal_or_more_ones(&input, pos) {
+                reduce_co2(remove_items(input, pos, '0'), pos + 1)
+            } else {
+                reduce_co2(remove_items(input, pos, '1'), pos + 1)
+            }
+        }
+    }
 }
 
 #[cfg(test)]
@@ -48,6 +101,17 @@ mod tests {
         assert_eq!(gamma_rate, 22);
         assert_eq!(epsilon_rate, 9);
         assert_eq!(gamma_rate * epsilon_rate, 198);
+    }
+    #[test]
+    fn test_p2() {
+        let input = vec![
+            "00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000",
+            "11001", "00010", "01010",
+        ];
+        let (oxygen, co2) = p2(input);
+        assert_eq!(oxygen, 23);
+        assert_eq!(co2, 10);
+        assert_eq!(oxygen * co2, 230);
     }
 
     #[test]
@@ -1054,7 +1118,7 @@ mod tests {
             "100001000000",
             "110100110111",
         ];
-        let (gamma_rate, epsilon_rate) = p1(input);
+        let (gamma_rate, epsilon_rate) = p2(input);
         assert_eq!(gamma_rate * epsilon_rate, 3912944);
     }
 }
