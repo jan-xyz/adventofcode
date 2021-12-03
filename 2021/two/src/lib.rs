@@ -1,4 +1,4 @@
-fn calculate_depth(input: Vec<(&str, isize)>) -> (isize, isize) {
+fn p1(input: Vec<(&str, isize)>) -> (isize, isize) {
     let mut horizontal_pos = 0;
     let mut depth = 0;
 
@@ -9,7 +9,25 @@ fn calculate_depth(input: Vec<(&str, isize)>) -> (isize, isize) {
         (_, _) => {}
     });
 
-    return (horizontal_pos, depth);
+    (horizontal_pos, depth)
+}
+
+fn p2(input: Vec<(&str, isize)>) -> (isize, isize) {
+    let mut horizontal_pos = 0;
+    let mut depth = 0;
+    let mut aim = 0;
+
+    input.into_iter().for_each(|item| match item {
+        ("forward", x) => {
+            horizontal_pos = horizontal_pos + x;
+            depth = depth + (aim * x)
+        }
+        ("down", x) => aim = aim + x,
+        ("up", x) => aim = aim - x,
+        (_, _) => {}
+    });
+
+    (horizontal_pos, depth)
 }
 
 #[cfg(test)]
@@ -27,11 +45,29 @@ mod test {
             ("forward", 2),
         ];
 
-        let (horizontal_pos, depth) = calculate_depth(input);
+        let (horizontal_pos, depth) = p1(input);
 
         assert_eq!(horizontal_pos, 15);
         assert_eq!(depth, 10);
         assert_eq!(horizontal_pos * depth, 150);
+    }
+
+    #[test]
+    fn test_two() {
+        let input = vec![
+            ("forward", 5),
+            ("down", 5),
+            ("forward", 8),
+            ("up", 3),
+            ("down", 8),
+            ("forward", 2),
+        ];
+
+        let (horizontal_pos, depth) = p2(input);
+
+        assert_eq!(horizontal_pos, 15);
+        assert_eq!(depth, 60);
+        assert_eq!(horizontal_pos * depth, 900);
     }
 
     #[test]
@@ -1038,8 +1074,8 @@ mod test {
             ("forward", 3),
             ("forward", 2),
         ];
-        let (horizontal_pos, depth) = calculate_depth(input);
+        let (horizontal_pos, depth) = p2(input);
 
-        assert_eq!(horizontal_pos * depth, 1480518);
+        assert_eq!(horizontal_pos * depth, 1282809906);
     }
 }
