@@ -23,8 +23,8 @@ fn p1(input: Vec<&str>) -> (isize, isize) {
 }
 
 fn p2(input: Vec<&str>) -> (isize, isize) {
-    let mut oxygen_rating = reduce_o(input.clone(), 0);
-    let mut co2_rating = reduce_co2(input, 0);
+    let oxygen_rating = reduce_o(input.clone(), 0);
+    let co2_rating = reduce_co2(input, 0);
     (
         isize::from_str_radix(&oxygen_rating, 2).unwrap(),
         isize::from_str_radix(&co2_rating, 2).unwrap(),
