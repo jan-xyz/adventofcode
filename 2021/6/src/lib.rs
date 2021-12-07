@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 pub fn p1(input: Vec<isize>, days: isize) -> usize {
     println!("Initial state: {:?}", input);
 
