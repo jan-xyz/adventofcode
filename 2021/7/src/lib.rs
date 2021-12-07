@@ -19,11 +19,7 @@ pub fn p1(input: Vec<usize>) -> (usize, usize) {
 }
 
 fn triangle_number(x: usize) -> usize {
-    return if x <= 1 {
-        x
-    } else {
-        x + triangle_number(x - 1)
-    };
+    (x * (x + 1)) / 2
 }
 
 pub fn p2(input: Vec<usize>) -> (usize, usize) {
