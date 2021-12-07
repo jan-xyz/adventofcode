@@ -18,6 +18,7 @@ pub fn p1(input: Vec<usize>) -> (usize, usize) {
     min
 }
 
+// https://en.wikipedia.org/wiki/Triangular_number
 fn triangle_number(x: usize) -> usize {
     (x * (x + 1)) / 2
 }
