@@ -1,4 +1,4 @@
-fn p1(input: Vec<(&str, isize)>) -> (isize, isize) {
+pub fn p1(input: Vec<(&str, isize)>) -> (isize, isize) {
     let mut horizontal_pos = 0;
     let mut depth = 0;
 
@@ -12,7 +12,7 @@ fn p1(input: Vec<(&str, isize)>) -> (isize, isize) {
     (horizontal_pos, depth)
 }
 
-fn p2(input: Vec<(&str, isize)>) -> (isize, isize) {
+pub fn p2(input: Vec<(&str, isize)>) -> (isize, isize) {
     let mut horizontal_pos = 0;
     let mut depth = 0;
     let mut aim = 0;
